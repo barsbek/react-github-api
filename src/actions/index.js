@@ -10,6 +10,12 @@ export const loadUser = login => dispatch => {
   dispatch(fetchEntity( url, schemas.user ));
 }
 
+export const getRepos = login => dispatch => {
+  const url = `/users/${login}/repos`;
+
+  dispatch(fetchEntity( url, [ schemas.repo ] ));
+}
+
 const fetchEntity = (url, schema) => dispatch => {
   dispatch(statusLoading());
 

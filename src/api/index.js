@@ -20,7 +20,9 @@ export const client = (url, method = 'get') => {
 }
 
 
-const user = new schema.Entity('users', {}, {
+const user = new schema.Entity('users', {
+  repos: [ repo ]
+}, {
   idAttribute: user => user.login
 });
 
@@ -30,5 +32,6 @@ const repo = new schema.Entity('repos', {
 
 export const schemas = {
   user,
-  repo
+  repo,
+  repos: [ repo ]
 }
