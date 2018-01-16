@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import Search from '../components/Search';
-import { getUser } from '../actions';
+import { loadUser } from '../actions';
 
-export default connect(
-  null,
-  { onSearchClick: getUser }
-)(Search);
+class SearchInfo extends Component {
+  onSearchClick = login => {
+    this.props.history.push(`${login}`);
+    this.props.dispatch(loadUser( login ));
+  }
+
+  render() {
+    return (
+      <Search onSearchClick={this.onSearchClick} />
+    )
+  }
+}
+
+export default withRouter(
+  connect()(SearchInfo)
+);

@@ -7,9 +7,7 @@ class Search extends Component {
   }
 
   handleKeyUp = (e) => {
-    if(e.key === 'Enter') {
-      this.search();
-    }
+    if(e.key === 'Enter') this.search();
   }
 
   search = () => {
@@ -17,7 +15,6 @@ class Search extends Component {
   }
 
   render() {
-    const { onSearchClick } = this.props;
     return (
       <div>
         <input

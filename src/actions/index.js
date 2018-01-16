@@ -4,7 +4,7 @@ import { statusLoading, statusFailure, statusOk } from './status';
 import { saveEntities } from './entities';
 import { client, schemas } from '../api';
 
-export const getUser = login => dispatch => {
+export const loadUser = login => dispatch => {
   const url = `/users/${login}`;
 
   dispatch(fetchEntity( url, schemas.user ));
