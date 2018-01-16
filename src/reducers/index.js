@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 
-import user from './user';
+import entities from './entities';
+import status from './status';
 
 export default combineReducers({
-  user,
+  entities,
+  status,
 });

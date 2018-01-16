@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import App from './App';
-import DevTools from './DevTools';
+import DevTools from '../containers/DevTools';
 
 const Root = () => (
   <Router >

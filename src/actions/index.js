@@ -1,25 +1,30 @@
-import axios from 'axios';
+import { normalize } from 'normalizr';
 
-const API_URL = 'https://api.github.com';
+import { statusLoading, statusFailure, statusOk } from './status';
+import { saveEntities } from './entities';
+import { client, schemas } from '../api';
 
-const userRequest = () => ({ type: 'USER_REQUEST' });
-const userSuccess = user => ({ type: 'USER_SUCCESS', user, });
-const userFailure = message => ({ type: 'USER_FAILURE', message });
+export const getUser = login => dispatch => {
+  const url = `/users/${login}`;
 
-export const getUserInfo = login => dispatch => {
-  const url = `${API_URL}/users/${login}`;
-  dispatch(userRequest());
-  axios.get(url)
-  .then(response => {
-    dispatch(userSuccess( response.data ));
-  })
-  .catch(err => {
-    const { response } = err;
-    let message = 'Something went wrong';
-    if(response && response.data.message) {
-      message = response.data.message;
-    }
-    dispatch(userFailure( message ));
-  })
+  dispatch(fetchEntity( url, schemas.user ));
 }
 
+const fetchEntity = (url, schema) => dispatch => {
+  dispatch(statusLoading());
+
+  return client(url).request()
+    .then(res => {
+      const normalized = normalize(res.data, schema);
+      dispatch(saveEntities( normalized.entities ));
+      dispatch(statusOk());
+    })
+    .catch(err => {
+      const { response } = err;
+      let message = 'Something went wrong';
+      if(response && response.data.message) {
+        message = response.data.message;
+      }
+      dispatch(statusFailure( message ));
+    })
+}
